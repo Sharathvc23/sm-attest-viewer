@@ -1,0 +1,37 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLEMLDSAPQ0004",
+  "ts": "2026-05-13T18:42:14.612Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "ops",
+    "value": "pq-hybrid-signer",
+    "did": "did:example:ops/pq-hybrid-signer",
+    "display_name": "PQ Hybrid Signer"
+  },
+  "topic": "tenants/acme-corp/agents/attestations",
+  "type": "EVIDENCE",
+  "classification": "public",
+  "payload": {
+    "subject": {
+      "namespace": "ops",
+      "value": "audit-archiver",
+      "did": "did:example:ops/audit-archiver"
+    },
+    "kind": "post_quantum_attested",
+    "image_digest": "sha256:9de17e6f4f5f0f2c7d8e3f4f5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c",
+    "recorded_at": "2026-05-13T18:42:14.000Z",
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "ml-dsa-2025",
+      "verificationMethod": "did:example:ops/pq-hybrid-signer#key-pq-1",
+      "created": "2026-05-13T18:42:14.320Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z4DhSt9Wzr7XlExampleDataIntegrityMlDsa2025PostQuantumFixtureValue4096Bytes=="
+    }
+  },
+  "lifecycle": "reconciled",
+  "reconciled_outcome": "superseded",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/41895",
+  "trace_id": "trace-01HXEZ0FEXAMPLE004"
+}

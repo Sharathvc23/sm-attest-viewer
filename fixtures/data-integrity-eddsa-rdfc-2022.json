@@ -1,0 +1,37 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLEEDDSARDFC0003",
+  "ts": "2026-05-13T18:42:13.501Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "compliance",
+    "value": "policy-attestor",
+    "did": "did:example:compliance/policy-attestor",
+    "display_name": "Policy Attestor"
+  },
+  "topic": "tenants/acme-corp/agents/attestations",
+  "type": "EVIDENCE",
+  "classification": "restricted",
+  "payload": {
+    "subject": {
+      "namespace": "compliance",
+      "value": "policy-engine",
+      "did": "did:example:compliance/policy-engine"
+    },
+    "kind": "rule_citation",
+    "image_digest": "sha256:8cd06d5e3f4f9e1b6c7d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b",
+    "recorded_at": "2026-05-13T18:42:13.000Z",
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-rdfc-2022",
+      "verificationMethod": "did:example:compliance/policy-attestor#key-1",
+      "created": "2026-05-13T18:42:13.250Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z3CTbZ8Vxq6WkExampleDataIntegrityEddsaRdfc2022FixtureValue=="
+    }
+  },
+  "lifecycle": "reconciled",
+  "reconciled_outcome": "converged",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/41894",
+  "trace_id": "trace-01HXEZ0FEXAMPLE003"
+}

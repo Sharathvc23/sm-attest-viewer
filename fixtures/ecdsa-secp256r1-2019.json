@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLESECP256R10002",
+  "ts": "2026-05-13T18:42:12.412Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "ops",
+    "value": "kms-signer",
+    "did": "did:example:ops/kms-signer",
+    "display_name": "KMS Signer"
+  },
+  "topic": "tenants/acme-corp/agents/attestations",
+  "type": "EVIDENCE",
+  "classification": "internal",
+  "payload": {
+    "subject": {
+      "namespace": "ops",
+      "value": "data-processor",
+      "did": "did:example:ops/data-processor"
+    },
+    "kind": "behavior_proof",
+    "image_digest": "sha256:7bc95c4f2e3f8d0a5b6c9d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1b",
+    "recorded_at": "2026-05-13T18:42:12.000Z",
+    "proof": {
+      "type": "EcdsaSecp256r1Signature2019",
+      "verificationMethod": "did:example:ops/kms-signer#key-1",
+      "created": "2026-05-13T18:42:12.180Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z7Mzy5Vbg9RkVwExampleEcdsaSecp256r1Signature2019FixtureValue=="
+    }
+  },
+  "lifecycle": "committed",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/41893",
+  "trace_id": "trace-01HXEZ0FEXAMPLE002"
+}

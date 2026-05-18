@@ -1,0 +1,28 @@
+/*
+ * Example CSS variable definitions for consumers of `sm-attest-viewer`.
+ *
+ * Drop this into your global stylesheet (or a `:root` block) so the
+ * renderer's trust gem and border-left styles pick up appropriate
+ * colors. Values below are tuned for 4.5:1 contrast against white in
+ * light mode; adjust for your theme.
+ *
+ * The renderer reads these by name; you can override per-theme via
+ * the standard `[data-theme="dark"]` / media query pattern.
+ */
+
+:root {
+  /* Trust gem palette (USWDS-derived neutrals are a reasonable default). */
+  --gem-verified: #14866d; /* green-cool-60v */
+  --gem-warning: #f0c33c; /* amber-30v */
+  --gem-failed: #c63622; /* red-60v */
+  --gem-pending: #6b6b6b; /* gray-50 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gem-verified: #5cb85c;
+    --gem-warning: #f0ad4e;
+    --gem-failed: #d9534f;
+    --gem-pending: #a0a0a0;
+  }
+}

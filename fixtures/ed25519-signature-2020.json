@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLEED255190001",
+  "ts": "2026-05-13T18:42:11.328Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "ops",
+    "value": "image-attestor",
+    "did": "did:example:ops/image-attestor",
+    "display_name": "Image Attestor"
+  },
+  "topic": "tenants/acme-corp/agents/attestations",
+  "type": "EVIDENCE",
+  "classification": "public",
+  "payload": {
+    "subject": {
+      "namespace": "ops",
+      "value": "image-attestor",
+      "did": "did:example:ops/image-attestor"
+    },
+    "kind": "image_verified",
+    "image_digest": "sha256:6ac84b3f1d2e7c9b4f5a8e0c1d2b3a4e5f6c7d8a9b0c1d2e3f4a5b6c7d8e9f0a",
+    "recorded_at": "2026-05-13T18:42:11.000Z",
+    "proof": {
+      "type": "Ed25519Signature2020",
+      "verificationMethod": "did:example:ops/image-attestor#key-1",
+      "created": "2026-05-13T18:42:11.100Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z58DAdFfa9SkqZMVPxAQp1RaY4eHnLPxL2NHCpHFRq9rPwExampleEd25519Sig2020FixtureValue=="
+    }
+  },
+  "lifecycle": "anchored",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/41892",
+  "trace_id": "trace-01HXEZ0FEXAMPLE001"
+}
