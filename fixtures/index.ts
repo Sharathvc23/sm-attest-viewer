@@ -39,16 +39,15 @@ export type GoldenFixtureKey = keyof typeof goldenFixtures;
  * three non-action discriminator values. The cryptosuite/proof block is
  * inherited from the §4.4 registry — these fixtures vary only the `type`
  * discriminator and topic so consumers can preview kind-aware rendering
- * before the upstream BE schemas (R2c belief, R2d checkpoint) finalize
- * their payload sub-fields.
+ * against the AAE v0.2 envelope shape.
  *
  * Signature material is placeholder bytes; treat these as shape examples,
  * not verifiable proofs.
  */
 export const envelopeKindFixtures = {
-  /** Operator authorize/deny/annotate; will carry M-of-N proofs in R6a. */
+  /** Operator authorize/deny/annotate; may carry M-of-N countersignatures. */
   decision: envelopeKindDecision as unknown as AttestationEvent,
-  /** Agent internal-state assertion; snapshot of an AgentMemory entry. */
+  /** Agent internal-state assertion; snapshot of an agent memory entry. */
   belief: envelopeKindBelief as unknown as AttestationEvent,
   /** Merkle commitment over predecessor envelopes in scope (RFC 6962). */
   checkpoint: envelopeKindCheckpoint as unknown as AttestationEvent,
