@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLEBELIEF00001",
+  "ts": "2026-05-19T21:16:05.117Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "consensus",
+    "value": "planner-agent",
+    "did": "did:example:consensus/planner-agent",
+    "display_name": "Planner Agent"
+  },
+  "topic": "tenants/acme-corp/agents/beliefs",
+  "type": "belief",
+  "classification": "internal",
+  "payload": {
+    "subject": {
+      "namespace": "consensus",
+      "value": "planner-agent",
+      "did": "did:example:consensus/planner-agent"
+    },
+    "kind": "belief_snapshot",
+    "recorded_at": "2026-05-19T21:16:05.000Z",
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-rdfc-2022",
+      "verificationMethod": "did:example:consensus/planner-agent#key-1",
+      "created": "2026-05-19T21:16:05.100Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z58DAdFfa9SkqZMVPxAQp1RaY4eHnLPxL2NHCpHFRq9rPwExampleBeliefFixture=="
+    }
+  },
+  "lifecycle": "anchored",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/72118",
+  "trace_id": "trace-01HXEZ0FEXAMPLE001"
+}

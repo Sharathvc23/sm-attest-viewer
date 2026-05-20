@@ -10,12 +10,12 @@ It is **one layer of a human-in-the-loop verification stack** — the trustworth
 
 The first TypeScript package in an otherwise Python-first portfolio of [Stellarminds.ai](https://stellarminds.ai) primitives aligned with Project NANDA standards.
 
-## What this package secures (v0.1)
+## What this package secures (v0.2)
 
 - **No content escape.** Every user-supplied field in the envelope reaches the DOM through React's default text-escaping path — no `dangerouslySetInnerHTML`, no string interpolation into HTML.
 - **Hardened object lookups.** Internal maps are accessed via `Object.hasOwn` guards so a hostile classification or status string cannot resolve to a prototype method.
 - **Defensive parsing.** Malformed timestamps, missing payload fields, non-string runtime values render gracefully rather than crash.
-- **Adversarially tested.** XSS payloads, prototype-pollution attempts, malformed inputs, and unknown trust states are explicitly covered in the 62-test suite.
+- **Adversarially tested.** XSS payloads, prototype-pollution attempts, malformed inputs, and unknown trust states are explicitly covered in the 69-test suite.
 
 ## What this package does not (yet) do
 
@@ -29,12 +29,13 @@ The first TypeScript package in an otherwise Python-first portfolio of [Stellarm
 - **Tested behavior** — pure derivation and filter functions exported and exhaustively unit-tested against the trust-state and rendering rules documented in [`SPEC.md`](./SPEC.md) §11.
 - **Four golden VC fixtures** covering every cryptosuite the AAE spec enumerates: `Ed25519Signature2020`, `EcdsaSecp256r1Signature2019`, `DataIntegrityProof + eddsa-rdfc-2022`, and `DataIntegrityProof + ml-dsa-2025` (FIPS 204 post-quantum).
 - **Accessible 4-state trust gem** mapping AAE lifecycle to verified / warning / failed / pending visual primitives.
+- **Envelope-kind discriminator (v0.2)** — the top-level `type` field is now a tagged union over `"action" \| "decision" \| "belief" \| "checkpoint"` per [`SPEC.md`](./SPEC.md) §13. Decision, belief, and checkpoint rows surface with distinct badges; legacy free-text values (e.g. `"EVIDENCE"`) normalize to `"action"` for full backward compatibility.
 
 ## Installation
 
 ### From source (current)
 
-The package is not yet published to npm. To use the v0.1 working draft today, install directly from the repository:
+The package is not yet published to npm. To use the v0.2 working draft today, install directly from the repository:
 
 ```bash
 git clone https://github.com/Sharathvc23/sm-attest-viewer.git
@@ -45,7 +46,7 @@ pnpm test
 
 ### From npm (planned)
 
-Once v0.1 stabilizes, the package will be published as `@sharathvc/sm-attest-viewer`:
+Once v0.2 stabilizes, the package will be published as `@sharathvc/sm-attest-viewer`:
 
 ```bash
 npm install @sharathvc/sm-attest-viewer
@@ -71,12 +72,18 @@ Wire `events` to wherever your AAEs come from — an AG-UI stream, an MCP tool o
 ## Golden Fixtures
 
 ```tsx
-import { goldenFixtures } from "@sharathvc/sm-attest-viewer/fixtures";
+import { goldenFixtures, envelopeKindFixtures } from "@sharathvc/sm-attest-viewer/fixtures";
 
+// Cryptosuite coverage (v0.1)
 goldenFixtures.ed25519Signature2020;        // VC 1.1
 goldenFixtures.ecdsaSecp256r1Signature2019; // VC 1.1, NIST P-256
 goldenFixtures.dataIntegrityEddsaRdfc2022;  // VC 2.0
 goldenFixtures.dataIntegrityMlDsa2025;      // VC 2.0, post-quantum ML-DSA
+
+// Envelope-kind discriminator (v0.2, SPEC §13)
+envelopeKindFixtures.decision;   // operator authorize/deny/annotate
+envelopeKindFixtures.belief;     // agent internal-state assertion
+envelopeKindFixtures.checkpoint; // merkle commitment over predecessor envelopes
 ```
 
 Fixture signatures use placeholder bytes — they do not verify against real keys. Treat them as shape examples.
@@ -111,6 +118,6 @@ The wire format used by the reference implementation is documented in [`SPEC.md`
 
 ---
 
-*First published: 2026-05-17 | Last modified: 2026-05-17*
+*First published: 2026-05-17 | Last modified: 2026-05-20*
 
 *Personal research contributions aligned with [Project NANDA](https://projectnanda.org) standards. [Stellarminds.ai](https://stellarminds.ai)*

@@ -141,7 +141,7 @@ For a richer envelope shape — with explicit `action_intent`, `rule_citation`, 
 | `tenant` | string | Tenant namespace for multi-tenant isolation. |
 | `actor` | object (see §3.4) | The agent emitting the event. |
 | `topic` | string | Substrate topic the event was emitted on (e.g., the AG-UI / MCP / A2A topic path). |
-| `type` | string | Event type. Attestation events use `"EVIDENCE"`. |
+| `type` | string | Envelope-kind discriminator. v0.1 producers commonly emit `"EVIDENCE"`; v0.2 producers SHOULD emit one of `"action" \| "decision" \| "belief" \| "checkpoint"` (see §13). Conforming renderers normalize unknown values to `"action"`. |
 | `classification` | string | Consumer-defined sensitivity label. Free-form. Common values include `public`, `internal`, `restricted`, `confidential`. Renderers ship default styling for common labels but accept any value. |
 | `payload` | object (see §3.5) | Type-specific content. |
 
@@ -524,6 +524,43 @@ The following questions are open as of v0.1 and would need to be resolved before
 5. **Countersignature ordering.** If countersignatures land via Appendix A, are they ordered or set-shaped (deduped by `verificationMethod`)?
 6. **Anchoring service interop.** §5 specifies the requirements on anchoring but not the specific transparency log implementation. v1.0 would name at least one concrete log (Sigstore-style, IETF SCITT, bespoke) for reference.
 7. **Renderer-side cryptographic verification.** §3.6 documents that v0.1 trust state is derived from substrate markers, not from independent signature checks. v1.0 would describe the renderer-side verification path.
+
+---
+
+## 13. Envelope Kinds (v0.2, Normative)
+
+> §13 lands in v0.2. It promotes the existing top-level `type` field (§3.1) from a free-text string to a tagged-union discriminator over four envelope kinds. The promotion is forward-compatible: v0.1 producers emitting `type: "EVIDENCE"` (or any other free-text value) continue to be accepted by conforming renderers, which MUST normalize unknown values to `"action"`.
+
+### 13.1 Discriminator field
+
+The `type` field at envelope root is the kind discriminator. Conforming v0.2 producers MUST emit one of:
+
+| `type` | Meaning |
+|--------|---------|
+| `"action"`     | Agent action attestation — the historical v0.1 shape. The default for v0.1 → v0.2 migration when no specific kind applies. |
+| `"decision"`   | Operator decision attestation — authorize, deny, annotate. May carry an M-of-N proof set when operator quorum is required (see §14, planned). |
+| `"belief"`     | Agent internal-state assertion — typically a snapshot of a memory entry the agent took an action on. |
+| `"checkpoint"` | Merkle commitment over predecessor envelopes within a scope, enabling reverse audit (see §16, planned). |
+
+`payload.kind` is a distinct field meaning "what was attested" (e.g. `rule_citation`, `image_verified`) and is unchanged by §13. The two fields MUST NOT be conflated.
+
+### 13.2 Field applicability
+
+The §3 base envelope shape applies to all four kinds. Sub-payload shapes specific to `decision` / `belief` / `checkpoint` are defined in §14 / §15 / §16 respectively (planned; not yet normative in v0.2). Until those land, producers SHOULD emit kind-tagged envelopes using the base §3 payload shape and let consumers route on `type` alone.
+
+### 13.3 Backward compatibility
+
+- Renderers MUST accept envelopes whose `type` is any string, not only the four kinds above. Unknown values MUST be treated as `"action"` for rendering purposes.
+- v0.1 producers emitting `type: "EVIDENCE"` remain conformant. The reference renderer normalizes such envelopes to `"action"` via the `envelopeKindOf` helper.
+- Consumers that need to distinguish kinds MUST switch on the normalized discriminator, not on raw `type`.
+
+### 13.4 Rationale
+
+The discriminator rides on the existing `type` field — not a new `kind` field — because `payload.kind` already exists with a different meaning at §3.5. Promoting a free-text field to a literal union is a type-safety upgrade with no field addition and no fixture migration on existing action data. This aligns with W3C VC 2.0's use of the top-level `type` array for variant tagging.
+
+### 13.5 Cross-reference: reverse-audit substrate
+
+The discriminator is the foundation for bidirectional auditability. Action / decision / belief envelopes chain forward via `predecessor_hash` (when present); checkpoint envelopes commit to a merkle root over predecessor envelopes in scope, enabling reverse audit in O(log N). The full reverse-audit pipeline is the subject of §16 (planned).
 
 ---
 

@@ -14,6 +14,7 @@ export { SignatureGem, type SignatureGemProps } from "./signature-gem";
 
 export {
   deriveTrustState,
+  envelopeKindOf,
   eventAgentLabel,
   eventPassesFilter,
   actorMatchKey,
@@ -26,6 +27,7 @@ export {
   EMPTY_FILTER,
   type AAEActor,
   type AAEClassification,
+  type AAEEnvelopeKind,
   type AAELifecycle,
   type AAEReconciledOutcome,
   type AttestationEvent,

@@ -1,0 +1,34 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLEDECISION0001",
+  "ts": "2026-05-19T21:14:33.482Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "ops",
+    "value": "approver-alice",
+    "did": "did:example:ops/approver-alice",
+    "display_name": "Alice Approver"
+  },
+  "topic": "tenants/acme-corp/decisions/proposals",
+  "type": "decision",
+  "classification": "restricted",
+  "payload": {
+    "subject": {
+      "namespace": "ops",
+      "value": "approver-alice",
+      "did": "did:example:ops/approver-alice"
+    },
+    "kind": "operator_authorize",
+    "recorded_at": "2026-05-19T21:14:33.000Z",
+    "proof": {
+      "type": "Ed25519Signature2020",
+      "verificationMethod": "did:example:ops/approver-alice#key-1",
+      "created": "2026-05-19T21:14:33.100Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z58DAdFfa9SkqZMVPxAQp1RaY4eHnLPxL2NHCpHFRq9rPwExampleDecisionFixture=="
+    }
+  },
+  "lifecycle": "committed",
+  "evidence_ref": "evidence://ledger/acme-corp/seq/72115",
+  "trace_id": "trace-01HXEZ0FEXAMPLE001"
+}

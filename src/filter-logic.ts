@@ -6,7 +6,36 @@
  * filter logic in JSX.
  */
 
-import type { AttestationEvent, AttestationFilter, TrustState } from "./types";
+import type {
+  AAEEnvelopeKind,
+  AttestationEvent,
+  AttestationFilter,
+  TrustState,
+} from "./types";
+
+const KNOWN_ENVELOPE_KINDS: ReadonlySet<AAEEnvelopeKind> = new Set([
+  "action",
+  "decision",
+  "belief",
+  "checkpoint",
+]);
+
+/**
+ * Normalize the envelope-kind discriminator per AAE SPEC §13.
+ *
+ * The wire field is typed as a literal union extended with `(string & {})` so
+ * legacy v0.1 producers emitting free-text values (e.g. `"EVIDENCE"`) still
+ * satisfy the type. Renderers route on the normalized kind: anything outside
+ * the four known variants collapses to `"action"`, which keeps v0.1 events
+ * rendering exactly as they did before §13 landed.
+ */
+export function envelopeKindOf(event: AttestationEvent): AAEEnvelopeKind {
+  const raw = event.type;
+  if (typeof raw === "string" && KNOWN_ENVELOPE_KINDS.has(raw as AAEEnvelopeKind)) {
+    return raw as AAEEnvelopeKind;
+  }
+  return "action";
+}
 
 /**
  * Derive trust state from an event envelope, per AAE SPEC §11.2.

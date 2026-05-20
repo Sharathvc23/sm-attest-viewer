@@ -108,4 +108,34 @@ describe("TimelineRow", () => {
     expect(() => renderRow(<TimelineRow event={event} />)).not.toThrow();
     expect(screen.getByTestId("attestation-row-weird-digest")).toBeInTheDocument();
   });
+
+  describe("envelope-kind badge (SPEC §13)", () => {
+    it("does not render a kind badge for action / legacy envelopes", () => {
+      const legacy = makeEvent({ id: "legacy", type: "EVIDENCE" });
+      renderRow(<TimelineRow event={legacy} />);
+      const row = screen.getByTestId("attestation-row-legacy");
+      expect(row.dataset.envelopeKind).toBe("action");
+      expect(screen.queryByTestId("envelope-kind-badge-action")).toBeNull();
+      expect(screen.queryByTestId("envelope-kind-badge-decision")).toBeNull();
+    });
+
+    it("renders a decision badge for type='decision'", () => {
+      const event = makeEvent({ id: "dec", type: "decision" });
+      renderRow(<TimelineRow event={event} />);
+      expect(screen.getByTestId("envelope-kind-badge-decision")).toBeInTheDocument();
+      expect(screen.getByTestId("attestation-row-dec").dataset.envelopeKind).toBe("decision");
+    });
+
+    it("renders a belief badge for type='belief'", () => {
+      const event = makeEvent({ id: "bel", type: "belief" });
+      renderRow(<TimelineRow event={event} />);
+      expect(screen.getByTestId("envelope-kind-badge-belief")).toBeInTheDocument();
+    });
+
+    it("renders a checkpoint badge for type='checkpoint'", () => {
+      const event = makeEvent({ id: "chk", type: "checkpoint" });
+      renderRow(<TimelineRow event={event} />);
+      expect(screen.getByTestId("envelope-kind-badge-checkpoint")).toBeInTheDocument();
+    });
+  });
 });

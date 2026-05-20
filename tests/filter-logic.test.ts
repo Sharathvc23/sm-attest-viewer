@@ -10,6 +10,7 @@
 import { describe, it, expect } from "vitest";
 import {
   deriveTrustState,
+  envelopeKindOf,
   eventAgentLabel,
   actorMatchKey,
   eventPassesFilter,
@@ -258,5 +259,22 @@ describe("distinctClassifications", () => {
 
   it("returns empty array for empty input", () => {
     expect(distinctClassifications([])).toEqual([]);
+  });
+});
+
+describe("envelopeKindOf (SPEC §13)", () => {
+  it("returns the known kind verbatim for action/decision/belief/checkpoint", () => {
+    for (const kind of ["action", "decision", "belief", "checkpoint"] as const) {
+      expect(envelopeKindOf(baseEvent({ type: kind }))).toBe(kind);
+    }
+  });
+
+  it("collapses legacy v0.1 free-text values to action", () => {
+    expect(envelopeKindOf(baseEvent({ type: "EVIDENCE" }))).toBe("action");
+    expect(envelopeKindOf(baseEvent({ type: "anything-else" }))).toBe("action");
+  });
+
+  it("collapses an empty string to action", () => {
+    expect(envelopeKindOf(baseEvent({ type: "" }))).toBe("action");
   });
 });

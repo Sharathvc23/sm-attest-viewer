@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "01HXEZ0EXAMPLECHECKPT0001",
+  "ts": "2026-05-19T21:30:00.000Z",
+  "tenant": "acme-corp",
+  "actor": {
+    "namespace": "anchor",
+    "value": "checkpoint-scheduler",
+    "did": "did:example:anchor/checkpoint-scheduler",
+    "display_name": "Checkpoint Scheduler"
+  },
+  "topic": "tenants/acme-corp/checkpoints/tenant",
+  "type": "checkpoint",
+  "classification": "internal",
+  "payload": {
+    "subject": {
+      "namespace": "anchor",
+      "value": "checkpoint-scheduler",
+      "did": "did:example:anchor/checkpoint-scheduler"
+    },
+    "kind": "merkle_commitment",
+    "recorded_at": "2026-05-19T21:30:00.000Z",
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "ml-dsa-2025",
+      "verificationMethod": "did:example:anchor/checkpoint-scheduler#key-1",
+      "created": "2026-05-19T21:30:00.100Z",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z58DAdFfa9SkqZMVPxAQp1RaY4eHnLPxL2NHCpHFRq9rPwExampleCheckpointFixture=="
+    }
+  },
+  "lifecycle": "anchored",
+  "evidence_ref": "evidence://ledger/acme-corp/checkpoints/00042",
+  "trace_id": "trace-01HXEZ0FEXAMPLE001"
+}

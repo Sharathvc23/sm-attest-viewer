@@ -36,6 +36,25 @@ export type AAELifecycle =
   | "reconciled";
 
 /**
+ * Envelope-kind discriminator per AAE SPEC §13 (v0.2).
+ *
+ *   - `"action"`     — agent action attestation (the historical default).
+ *   - `"decision"`   — operator authorize/deny/annotate; may carry M-of-N
+ *                      countersignatures in `payload.proofs[]`.
+ *   - `"belief"`     — agent internal-state assertion; snapshot of a memory
+ *                      entry, surfaced for forensic timelines.
+ *   - `"checkpoint"` — merkle commitment over predecessor envelopes in scope
+ *                      (RFC 6962 SHA-256); enables reverse audit in O(log N).
+ *
+ * The discriminator name is `type` (not `kind`) because `payload.kind` is a
+ * distinct, pre-existing field meaning "what was attested" (e.g.
+ * `rule_citation`, `image_verified`). Producers conforming to v0.1 emitted
+ * `type: "EVIDENCE"`; renderers MUST continue to accept free-text values
+ * and treat unknown ones as `"action"`.
+ */
+export type AAEEnvelopeKind = "action" | "decision" | "belief" | "checkpoint";
+
+/**
  * Reconciliation outcomes from AAE SPEC §6.1. Only meaningful when
  * `lifecycle === "reconciled"`.
  */
@@ -89,7 +108,16 @@ export type AttestationEvent = {
   tenant: string;
   actor: AAEActor;
   topic: string;
-  type: string;
+  /**
+   * Envelope-kind discriminator per AAE SPEC §13 (v0.2). See `AAEEnvelopeKind`
+   * for the variants and their semantics.
+   *
+   * Typed as `AAEEnvelopeKind | (string & {})` so the four known kinds get
+   * autocomplete + narrowing while v0.1 substrates emitting free-text values
+   * (e.g. `"EVIDENCE"`) still satisfy the type. Renderers MUST treat unknown
+   * values as `"action"` (see `envelopeKindOf` in `filter-logic.ts`).
+   */
+  type: AAEEnvelopeKind | (string & {});
   /** Consumer-defined sensitivity label. See AAEClassification. */
   classification: AAEClassification;
   payload: AttestationPayload;
