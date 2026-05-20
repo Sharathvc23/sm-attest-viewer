@@ -102,15 +102,34 @@ The wire format used by the reference implementation is documented in [`SPEC.md`
 
 ## Related Packages
 
+### Operator surfaces (peers)
+
+| Package | Role |
+|---|---|
+| [`sm-decision-inspector`](https://github.com/Sharathvc23/sm-decision-inspector) | HITL workbench for the `"decision"` envelope variant — approve / deny gestures, M-of-N countersignature quorum, signer roster. |
+| [`sm-attest-auditor`](https://github.com/Sharathvc23/sm-attest-auditor) | Bidirectional audit drill — forward chain-walk via `predecessor_hash` and reverse RFC 6962 merkle inclusion verification from checkpoint envelopes. |
+
+### Behavioral Trust (produces / stages AAEs)
+
 | Package | Role |
 |---|---|
 | [`sm-locp`](https://github.com/Sharathvc23/sm-locp) | Open Compliance Protocol — defeasible-logic engine + W3C VC issuance. **Produces AAEs.** |
 | [`sm-enclave`](https://github.com/Sharathvc23/sm-enclave) | Speculative execution sandbox; stages side effects before AAE commit. |
+
+### Federation
+
+| Package | Role |
+|---|---|
 | [`sm-bridge`](https://github.com/Sharathvc23/sm-bridge) | NANDA-compatible registry endpoints + Quilt-style delta sync. |
+
+### Model Trust
+
+| Package | Role |
+|---|---|
 | [`sm-model-provenance`](https://github.com/Sharathvc23/sm-model-provenance) | Zero-dependency model identity dataclass. |
 | [`sm-model-card`](https://github.com/Sharathvc23/sm-model-card) | Unified model card schema. |
 | [`sm-model-integrity-layer`](https://github.com/Sharathvc23/sm-model-integrity-layer) | Offline integrity verification. |
-| [`sm-model-governance`](https://github.com/Sharathvc23/sm-model-governance) | Three-plane ML governance. |
+| [`sm-model-governance`](https://github.com/Sharathvc23/sm-model-governance) | Three-plane ML governance — training → approval → serving. |
 
 ## License
 

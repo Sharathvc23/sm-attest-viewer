@@ -1,6 +1,6 @@
 {
   "name": "@sharathvc/sm-attest-viewer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Audited display surface for attested AI agent action streams — React/TypeScript renderer for the Attested Action Envelope (AAE), the trustworthy display step in human-in-the-loop verification of high-stakes autonomous decisions. Aligned with Project NANDA's Attestation pillar.",
   "license": "MIT",
   "author": "Sharath VC",
