@@ -125,6 +125,12 @@ An AAE is, concretely, a `DataIntegrityProof`-bearing VC produced by an OCP-conf
 
 ---
 
+### 2.9 ARP — Agency Receipt Protocol (Human-Facing Complement)
+
+The [Agency Receipt Protocol (ARP)](https://github.com/Sharathvc23/sm-arp) is also a per-action signed envelope, and **complements** AAE rather than competing with it. ARP is the *human-facing* receipt — a one-sentence `human_summary` plus an `authority_chain`, held by the represented human, a regulator, or an insurer, with a per-issuer forward hash chain. AAE is the *substrate* evidence record this renderer displays, with `checkpoint` envelopes anchoring bidirectional (forward + reverse merkle-inclusion) audit.
+
+They compose through a defined seam: an ARP receipt's `evidence` MAY reference the AAE envelope(s) that substantiate the action, and an AAE `checkpoint` MAY include ARP receipts among the records it commits to. So ARP relies on AAE for reverse-audit anchoring rather than defining its own merkle layer, and AAE carries no human summary or authority chain — those remain ARP's. An implementation MAY emit both for one action: an AAE envelope for the substrate, an ARP receipt for the human. The normative seam is ARP `spec.md` §16.
+
 ## 3. AAE Structure (v0.1, as shipped)
 
 This section describes the wire envelope as actually shipped by the reference implementation. The envelope is a flat JSON object carrying the surface fields an operator needs to triage an attestation stream; cryptographic detail rides inside `payload.proof`.
